@@ -12,6 +12,7 @@ LABEL maintainer="Paulus Schoutsen <Paulus@PaulusSchoutsen.nl>"
 #ENV INSTALL_LIBCEC no
 #ENV INSTALL_PHANTOMJS no
 #ENV INSTALL_SSOCR no
+#ENV_INSTALL_CHROMEDRIVER no
 
 VOLUME /config
 

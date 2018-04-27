@@ -1,0 +1,32 @@
+#!/bin/bash
+# Sets up chromedriver.
+
+# Stop on errors
+set -e
+
+CHROME_DRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
+
+PACKAGES=(
+  unzip xvfb libxi6 libgconf-2-4 google-chrome-stable
+)
+
+# Install jre
+apt-get install -y --no-install-recommends -t jessie-backports openjdk-8-jre-headless
+
+# Add chrome-deb stable
+curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+echo "Adding chrome-deb stable"
+echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list
+apt-get update
+
+apt-get install -y --no-install-recommends ${PACKAGES[@]}
+
+
+cd /usr/src/app/
+mkdir -p build && cd build
+echo "Installing chromedriver"
+
+curl -LSO http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+rm chromedriver_linux64.zip
+mv -f chromedriver /usr/bin/chromedriver
